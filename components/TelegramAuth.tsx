@@ -1,11 +1,9 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
 
 export default function TelegramAuth() {
     const [isAuthenticated, setIsAuthenticated] = useState(false)
-    const router = useRouter()
 
     useEffect(() => {
         authenticateUser()
@@ -40,9 +38,19 @@ export default function TelegramAuth() {
         }
     }
 
-    const accessProtectedPage = () => {
+    const accessProtectedPage = async () => {
         if (isAuthenticated) {
-            router.push('/protected')
+            try {
+                const response = await fetch('/protected')
+                if (response.ok) {
+                    window.location.href = '/protected'
+                } else {
+                    alert('You are not authorized to access the protected page.')
+                }
+            } catch (error) {
+                console.error('Error accessing protected page:', error)
+                alert('An error occurred while trying to access the protected page.')
+            }
         } else {
             alert('You need to be authenticated to access the protected page.')
         }
