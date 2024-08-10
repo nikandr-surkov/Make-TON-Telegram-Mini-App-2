@@ -3,9 +3,13 @@ import type { NextRequest } from 'next/server'
 import { verifyToken } from './utils/jwtUtils'
 
 export function middleware(request: NextRequest) {
-  const token = request.cookies.get('token')?.value
 
   if (request.nextUrl.pathname.startsWith('/protected')) {
+    const token = request.cookies.get('token')?.value
+    console.log("Token: ", token)
+    if (token) {
+      console.log("Verify token? ", verifyToken(token))
+    }
     if (!token || !verifyToken(token)) {
       return NextResponse.redirect(new URL('/', request.url))
     }
