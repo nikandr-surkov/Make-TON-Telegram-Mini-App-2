@@ -1,16 +1,22 @@
 'use client'
 
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react'
 
 export default function TelegramAuth() {
     const [isAuthenticated, setIsAuthenticated] = useState(false)
+    const router = useRouter()
 
-    // useEffect(() => {
-    //     authenticateUser()
-    //     const interval = setInterval(authenticateUser, 55 * 60 * 1000) // Re-authenticate every 55 minutes
-    //     return () => clearInterval(interval)
-    // }, [])
+    useEffect(() => {
+        checkAuth()
+    }, [])
+
+    const checkAuth = async () => {
+        const response = await fetch('/api/session')
+        if (response.ok) {
+            setIsAuthenticated(true)
+        }
+    }
 
     const authenticateUser = async () => {
         const WebApp = (await import('@twa-dev/sdk')).default;
@@ -28,6 +34,7 @@ export default function TelegramAuth() {
 
                 if (response.ok) {
                     setIsAuthenticated(true)
+                    router.refresh()
                 } else {
                     console.error('Authentication failed')
                     setIsAuthenticated(false)
@@ -44,12 +51,12 @@ export default function TelegramAuth() {
             {isAuthenticated ? (
                 <>
                     <p>Authenticated!</p>
-                    <Link
-                        href="/protected"
+                    <button
+                        onClick={() => router.push('/protected')}
                         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                     >
                         Access Protected Page
-                    </Link>
+                    </button>
                 </>
             ) : (
                 <div>

@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
-import { verifyToken } from './utils/jwtUtils'
-import { getSession } from './lib'
+import { getSession, updateSession } from './lib'
 
 export async function middleware(request: NextRequest) {
   if (request.nextUrl.pathname.startsWith('/protected')) {
@@ -13,9 +12,9 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  return NextResponse.next()
+  return updateSession(request);
 }
 
 export const config = {
-  matcher: '/protected/:path*',
+  matcher: ['/protected/:path*', '/api/:path*'],
 }
