@@ -61,7 +61,12 @@ export default function TelegramAuth() {
             ) : (
                 <div>
                     <p>You need to be an owner of this account</p>
-                    <button onClick={authenticateUser}>Authenticate</button>
+                    <button
+                        onClick={authenticateUser}
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    >
+                        Authenticate
+                    </button>
                 </div>
             )}
         </div>
