@@ -29,7 +29,7 @@ export function validateTelegramWebAppData(telegramInitData: string): Validation
 
   const initData = new URLSearchParams(telegramInitData)
   const hash = initData.get('hash')
-  
+
   if (!hash) {
     return { message: 'Hash is missing from initData', validatedData: null, user: {} }
   }
@@ -44,10 +44,10 @@ export function validateTelegramWebAppData(telegramInitData: string): Validation
   const authTimestamp = parseInt(authDate, 10)
   const currentTimestamp = Math.floor(Date.now() / 1000)
   const timeDifference = currentTimestamp - authTimestamp
-  const threeHoursInSeconds = 3 * 60 * 60
+  const fiveMinutesInSeconds = 5 * 60
 
-  if (timeDifference > threeHoursInSeconds) {
-    return { message: 'Telegram data is older than 3 hours', validatedData: null, user: {} }
+  if (timeDifference > fiveMinutesInSeconds) {
+    return { message: 'Telegram data is older than 5 minutes', validatedData: null, user: {} }
   }
 
   const dataCheckString = Array.from(initData.entries())

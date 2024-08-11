@@ -63,9 +63,10 @@ As this is a Telegram Mini App, you can't see the result directly in development
 - `app/page.tsx`: Main page component
 - `app/protected/page.tsx`: Protected page component
 - `app/api/auth/route.ts`: Authentication API route
+- `app/api/session/route.ts`: Session API route
 - `components/TelegramAuth.tsx`: Telegram authentication component
 - `middleware.ts`: Middleware for protecting routes
-- `utils/jwtUtils.ts`: JWT utility functions
+- `utils/session.ts`: Session utility functions
 - `utils/telegramAuth.ts`: Telegram authentication utility functions
 
 ## YouTube Channel

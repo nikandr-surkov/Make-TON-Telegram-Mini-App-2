@@ -1,5 +1,5 @@
+import { getSession } from '@/utils/session'
 import { NextResponse } from 'next/server'
-import { getSession } from '@/lib'
 
 export async function GET() {
   const session = await getSession()
